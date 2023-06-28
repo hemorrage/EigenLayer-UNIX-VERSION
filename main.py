@@ -1,5 +1,5 @@
 from random import randint
-
+from platform import system
 from config import *
 from core import balance_check, bridge_geth, send_geth_to_steth, approve_trans, stake_tokens
 from utils import logger, wanna_sleep_activ, wanna_sleep_accs, success_accs_w, failed_accs_w
@@ -33,7 +33,11 @@ if __name__ == '__main__':
             logger.success(f'Отправил gETH - acc.{acc_info}, сплю {wanna_sleep_activ()} |№{acc_number}|')  
             
             reason = 'approve rETH'
-            balance_reth = approve_trans(key, acc_info, reth_adres, 'abies\\reth_goerli.json', 'rETH')
+            user_system = system()
+            if user_system == 'Windows':
+                balance_reth = approve_trans(key, acc_info, reth_adres, 'abies\\reth_goerli.json', 'rETH')
+            else:
+                balance_reth = approve_trans(key, acc_info, reth_adres, 'abies/reth_goerli.json', 'rETH')
             logger.success(f'Апрувнул rETH - acc.{acc_info}, сплю {wanna_sleep_activ()} |№{acc_number}|')
             
             reason = 'stake rETH'
@@ -41,7 +45,10 @@ if __name__ == '__main__':
             logger.success(f'Застейкал rETH- acc.{acc_info}, сплю {wanna_sleep_activ()} |№{acc_number}|')
 
             reason = 'approve stETH'
-            balance_steth = approve_trans(key, acc_info, steth_adres, 'abies\\steth_goerli.json', 'stETH')
+            if user_system == 'Windows':
+                balance_steth = approve_trans(key, acc_info, steth_adres, 'abies\\steth_goerli.json', 'stETH')
+            else:
+                balance_steth = approve_trans(key, acc_info, steth_adres, 'abies/steth_goerli.json', 'stETH')
             logger.success(f'Апрувнул stETH - acc.{acc_info}, сплю {wanna_sleep_activ()} |№{acc_number}|')
             
             reason = 'stake stETH'
